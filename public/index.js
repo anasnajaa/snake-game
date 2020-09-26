@@ -3,7 +3,7 @@ const main = () => {
     const ctx = canvas.getContext('2d');
     
     // Mutable state
-    let state = snake.initialState();
+    let state = initialState();
 
     // Position helpers
     const x = c => Math.round(c * canvas.width / state.cols);
@@ -24,7 +24,7 @@ const main = () => {
         ctx.fillRect(x(state.apple.x), y(state.apple.y), x(1), y(1));
 
         // add crash
-        if(state.snake.length === 0){
+        if(state.length === 0){
             ctx.fillStyle = "rgb(255,0,0)";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -33,7 +33,7 @@ const main = () => {
     // Game loop update
     const step = t1 => t2 => {
         if(t2 - t1 > 100) {
-            state = snake.next(state);
+            state = next(state);
             draw();
             window.requestAnimationFrame(step(t2));
         } else {
@@ -44,10 +44,10 @@ const main = () => {
     // Key events
     window.addEventListener('keydown', e => {
         switch (e.key) {
-            case 'w': case 'h': case 'ArrowUp':     state = snake.enqueue(state, snake.NORTH); break;
-            case 'a': case 'j': case 'ArrowLeft':   state = snake.enqueue(state, snake.WEST);  break;
-            case 's': case 'k': case 'ArrowDown':   state = snake.enqueue(state, snake.SOUTH); break;
-            case 'd': case 'l': case 'ArrowRight':  state = snake.enqueue(state, snake.EAST);  break;
+            case 'w': case 'h': case 'ArrowUp':     state = enqueue(state, NORTH); break;
+            case 'a': case 'j': case 'ArrowLeft':   state = enqueue(state, WEST);  break;
+            case 's': case 'k': case 'ArrowDown':   state = enqueue(state, SOUTH); break;
+            case 'd': case 'l': case 'ArrowRight':  state = enqueue(state, EAST);  break;
         }
     });
     
